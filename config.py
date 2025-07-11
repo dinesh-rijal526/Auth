@@ -9,4 +9,3 @@ class Settings(BaseSettings):
     )
     
 Config = Settings() # type: ignore
-print(Config.DATABASE_URL)
