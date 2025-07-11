@@ -2,8 +2,8 @@ from pydantic import BaseModel, Field
 import uuid
 
 class CreateUserModel(BaseModel):
-    first_name : str = Field(max_digits=20)
-    middle_name : str | None = Field(max_length=20)
+    first_name : str = Field(max_length=20)
+    middle_name : str | None = None
     last_name : str = Field(max_length=20)
     username : str = Field(max_length=20)
     email : str = Field(max_length=50)
@@ -21,3 +21,6 @@ class UserModel(BaseModel):
 class LoginUserModel(BaseModel):
     email : str 
     password : str
+    
+class EmailModel(BaseModel):
+    email : str
