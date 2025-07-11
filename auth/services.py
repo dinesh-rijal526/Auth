@@ -25,7 +25,7 @@ class UserServices():
             **user_data_dict
         ) 
         
-        new_user.hash_password = user_data_dict['password']
+        new_user.hash_password = generate_hash_password(user_data_dict['password'])
         session.add(new_user)
         await session.commit()
         return new_user
