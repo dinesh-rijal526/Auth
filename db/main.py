@@ -7,6 +7,7 @@ from config import Config
 async_engine = AsyncEngine(
     create_engine(
         url=Config.DATABASE_URL,
+        connect_args={"timeout": 60},
         echo=True
     )
 )

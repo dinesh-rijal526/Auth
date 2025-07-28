@@ -8,13 +8,21 @@ class UserServices():
     async def get_user_by_email(self, email:str, session:AsyncSession):
         statement = select(User).where(User.email == email)
         result = await session.exec(statement)
-        user_email = result.first()
-        return user_email
+        user = result.first()
+        return user
     
-    async def user_exist(self, email:str, session:AsyncSession):
+    async def email_exist(self, email:str, session:AsyncSession):
         statement = select(User).where(User.email == email)
         user = await session.exec(statement)
-        if user is None:
+        if user.first() is None:
+            return False
+        else:
+            return True
+        
+    async def username_exist(self, username:str, session:AsyncSession):
+        statement = select(User).where(User.username == username)
+        user_name = await session.exec(statement)
+        if user_name.first() is None :
             return False
         else:
             return True

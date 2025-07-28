@@ -22,5 +22,3 @@ class LoginUserModel(BaseModel):
     email : str 
     password : str
     
-class EmailModel(BaseModel):
-    email : str
