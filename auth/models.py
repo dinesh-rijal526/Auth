@@ -11,4 +11,11 @@ class User(SQLModel, table=True):
     username : str = Field(unique=True, nullable=False)
     email : str = Field(unique=True, nullable=False)
     hash_password : str = Field(exclude=True, nullable=False)
-    created_date : datetime = Field(sa_column=Column(pg.TIMESTAMP, nullable=False, default=datetime.now))
+    is_verified : bool = Field(default=False)
+    role : str = Field(sa_column=Column(pg.VARCHAR, nullable=False, server_default="user"))
+    created_at : datetime = Field(sa_column=Column(pg.TIMESTAMP, nullable=False, default=datetime.now))
+    updated_at : datetime = Field(sa_column=Column(pg.TIMESTAMP, nullable=False, default=datetime.now, onupdate=datetime.now))
+    
+    def __repr__(self):
+        return f"<User {self.username}>"
+    

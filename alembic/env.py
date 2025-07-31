@@ -6,9 +6,9 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
-from sqlmodel import SQLModel
 from auth.models import User
 from config import Config
+from sqlmodel import SQLModel
 
 database_url = Config.DATABASE_URL
 

@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from typing import List
 import uuid
 
 class CreateUserModel(BaseModel):
@@ -22,3 +23,5 @@ class LoginUserModel(BaseModel):
     email : str 
     password : str
     
+class EmailModel(BaseModel):
+    addresses : List[str]

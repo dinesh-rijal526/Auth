@@ -2,6 +2,8 @@ from fastapi import Request, status, Depends
 from fastapi.security import HTTPBearer
 from fastapi.security.http import HTTPAuthorizationCredentials
 from sqlmodel.ext.asyncio.session import AsyncSession
+from typing import List
+from .models import User
 from .utils import decode_token
 from fastapi.exceptions import HTTPException
 from db.redis import token_in_blocklist
@@ -79,3 +81,20 @@ async def get_current_user(
     user = await user_services.get_user_by_email(user_email, session)
     return user
     
+class RoleChecker:
+    def __init__(self, allowed_roles: List[str]) -> None:
+        self.allowed_roles = allowed_roles
+
+    def __call__(self, current_user: User = Depends(get_current_user)):
+        if not current_user.is_verified:
+            raise HTTPException(
+            status_code = status.HTTP_403_FORBIDDEN,
+            detail="Your account is not verified, Please verify to Login"
+        )
+        if current_user.role in self.allowed_roles:
+            return True
+
+        raise HTTPException(
+            status_code = status.HTTP_403_FORBIDDEN,
+            detail="You are not allowed to perform this action."
+        )
